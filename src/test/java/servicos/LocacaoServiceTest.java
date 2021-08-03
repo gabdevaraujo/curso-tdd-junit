@@ -7,7 +7,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.Date;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ErrorCollector;
 
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
@@ -15,6 +17,9 @@ import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.servicos.LocacaoService;
 
 public class LocacaoServiceTest {
+
+	@Rule
+	public ErrorCollector errorCollector = new ErrorCollector();
 	
 	@Test
 	public void teste() {
@@ -30,8 +35,8 @@ public class LocacaoServiceTest {
 
 
 		//verificaoção
-		assertThat(locacao.getValor(), is(10.0));
-		assertThat(isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
-		assertThat(isMesmaData(locacao.getDataRetorno(), obterDataComDiferencaDias(1)), is(true));
+		errorCollector.checkThat(locacao.getValor(), is(5.0));
+		errorCollector.checkThat(isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
+		errorCollector.checkThat(isMesmaData(locacao.getDataRetorno(), obterDataComDiferencaDias(1)), is(false));
 	}
 }
